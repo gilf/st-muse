@@ -8,33 +8,34 @@ import { MuseClient } from 'muse-js';
 export class MuseComponent {
     @Prop() enableAux: boolean;
     @State() connected: boolean;
-    client: MuseClient;
     @Event() eegReadingsReceived: EventEmitter;
     @Event() telemetryDataReceived: EventEmitter;
     @Event() accelerometerDataReceived: EventEmitter;
+
+    client: MuseClient;
 
     @Method()
     async connect() {
         if (!this.client) {
             this.client = new MuseClient();
-            this.client.enableAux = this.enableAux;
+            this.client.eegReadings.subscribe(reading => {
+                this.eegReadingsReceived.emit(reading);
+            });
+            this.client.telemetryData.subscribe(telemetry => {
+                this.telemetryDataReceived.emit(telemetry);
+            });
+            this.client.accelerometerData.subscribe(acceleration => {
+                this.accelerometerDataReceived.emit(acceleration);
+            });
+            this.client.connectionStatus.subscribe(connected => {
+                this.connected = connected;
+            });
         }
+
+        this.client.enableAux = this.enableAux;
 
         await this.client.connect();
         await this.client.start();
-
-        this.client.eegReadings.subscribe(reading => {
-          this.eegReadingsReceived.emit(reading);
-        });
-        this.client.telemetryData.subscribe(telemetry => {
-          this.telemetryDataReceived.emit(telemetry);
-        });
-        this.client.accelerometerData.subscribe(acceleration => {
-          this.accelerometerDataReceived.emit(acceleration);
-        });
-        this.client.connectionStatus.subscribe(connected => {
-         this.connected = connected;
-        });
     }
 
     @Method()
