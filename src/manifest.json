@@ -1,6 +1,6 @@
 {
-  "name": "Stencil Starter",
-  "short_name": "Stencil",
+  "name": "st-muse",
+  "short_name": "st-muse",
   "start_url": "/",
   "display": "standalone",
   "icons": [{
