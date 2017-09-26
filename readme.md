@@ -1,6 +1,6 @@
 # st-muse
 
-st-muse is simple [Stencil](https://stenciljs.com/) component that connects into Muse device using [muse.js](https://github.com/urish/muse-js).
+st-muse is simple [Stencil](https://stenciljs.com/) component that connects into [Muse](http://www.choosemuse.com/) device using [muse.js](https://github.com/urish/muse-js).
 
 ## Getting Started
 
